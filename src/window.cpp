@@ -59,6 +59,7 @@ static void checkGLFWwindowInit(GLFWwindow* window) {
   }
 }
 
+// checks if GLFW initialised correctly
 static void checkGladInit(GLFWwindow* window) {
   if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
     std::cerr << "Failed to initialise GLAD" << std::endl;

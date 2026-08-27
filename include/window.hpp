@@ -14,7 +14,8 @@ public:
   Window& operator=(const Window&) = delete;
 
   void init();
-
+  
+  // returns the pointer to the GLFWwindow variable
   GLFWwindow* get() { return window_; }
 
 private:

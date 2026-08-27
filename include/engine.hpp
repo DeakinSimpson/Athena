@@ -1,11 +1,12 @@
 #pragma once
 
 #include "window.hpp"
+#include "controller.hpp"
 
 class Engine {
 public:
 
-  Engine() = default;
+  Engine();
 
   // getters / setters
   Window& getWindow() { return window_; }
@@ -14,8 +15,11 @@ public:
   void start();
   void stop();
 
-  void onUpdate();
-
 private:
-  Window window_;
+  // holds global engine variables
+  Window window_ {};
+  Controller controller_ {};
+
+  void init();
+  void onUpdate();
 };
