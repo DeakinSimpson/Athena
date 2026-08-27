@@ -1,6 +1,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include "window.hpp"
+#include "default.hpp"
 #include <iostream>
 
 static void setWindowOptions();
