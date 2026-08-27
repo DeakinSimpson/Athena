@@ -1,19 +1,18 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include "window.hpp"
+#include "engine.hpp"
 
 int main()
 {
-  Window window;
+  Engine engine;
 
-  window.init();
+  engine.start();
 
-  while (!glfwWindowShouldClose(window.get())) {
-    glfwSwapBuffers(window.get());
-    glfwPollEvents();
+  while (!glfwWindowShouldClose(engine.getWindow().get())) {
+    engine.onUpdate();
   }
+
+  engine.stop();
 
   return 0;
 }
-
-

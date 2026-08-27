@@ -33,6 +33,12 @@ void Window::init() {
   glfwSetFramebufferSizeCallback(window_, framebuffer_size_callback);
 }
 
+// window deconstructor
+Window::~Window() {
+  glfwTerminate();
+  glfwDestroyWindow(window_);
+}
+
 // sets the GLFW window options before launching
 static void setWindowOptions() {
   glfwInit();
