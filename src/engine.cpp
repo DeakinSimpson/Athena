@@ -3,6 +3,14 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+// forward declerations for static functions
+static void setBackgroundColor(
+    const float r, 
+    const float g, 
+    const float b, 
+    const float a
+);
+
 /*
  * constructer just calls init, this is to not clutter the constructor
  */
@@ -45,11 +53,7 @@ void Engine::onUpdate() {
  * logic and handles all on-screen drawing
  */
 void Engine::onRender() {
-  // sets the color state
-  glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-
-  // this sets the color state
-  glClear(GL_COLOR_BUFFER_BIT);
+  setBackgroundColor(0.2f, 0.3f, 0.3f, 1.0f);
 }
 
 /*
@@ -58,4 +62,18 @@ void Engine::onRender() {
  */
 void Engine::stop() {
   glfwTerminate();
+}
+
+static void setBackgroundColor(
+    const float r,
+    const float g,
+    const float b,
+    const float a
+) {
+  // sets the color state
+  glClearColor(r, g, b, a);
+
+  // this sets the color state
+  glClear(GL_COLOR_BUFFER_BIT);
+
 }
