@@ -24,6 +24,7 @@ void Engine::init() {
 void Engine::start() {
   while (!glfwWindowShouldClose(window_.get())) {
     onUpdate();
+    onRender();
   }
 }
 
@@ -37,6 +38,18 @@ void Engine::onUpdate() {
 
   glfwSwapBuffers(window_.get());
   glfwPollEvents();
+}
+
+/* 
+ * this processes all render logic for the engine. it runs after the updated
+ * logic and handles all on-screen drawing
+ */
+void Engine::onRender() {
+  // sets the color state
+  glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+
+  // this sets the color state
+  glClear(GL_COLOR_BUFFER_BIT);
 }
 
 /*

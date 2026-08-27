@@ -22,4 +22,5 @@ private:
 
   void init();
   void onUpdate();
+  void onRender();
 };
