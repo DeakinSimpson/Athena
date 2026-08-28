@@ -11,10 +11,46 @@ static void setBackgroundColor(
     const float a
 );
 
+// TEMP TEST
+const char *vertexShaderSource = "#version 330 core\n"
+    "layout (location = 0) in vec3 aPos;\n"
+    "void main()\n"
+    "{\n"
+    "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+    "}\0";
+const char *fragmentShaderSource = "#version 330 core\n"
+    "out vec4 FragColor;\n"
+    "void main()\n"
+    "{\n"
+    "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+    "}\n\0";
+
+float vertices[] = {
+     0.5f,  0.5f, 0.0f,  // top right
+     0.5f, -0.5f, 0.0f,  // bottom right
+    -0.5f, -0.5f, 0.0f,  // bottom left
+    -0.5f,  0.5f, 0.0f   // top left 
+};
+unsigned int indices[] = {  // note that we start from 0!
+    0, 1, 3,  // first Triangle
+    1, 2, 3   // second Triangle
+};
+
+#include <optional>
+#include "vao.hpp"
+#include "vbo.hpp"
+#include "ebo.hpp"
+
+std::optional<VAO> vao;
+std::optional<VBO> vbo;
+std::optional<EBO> ebo;
+
+// ---------------------------------------------------------------------------
+
 /*
  * constructer just calls init, this is to not clutter the constructor
  */
-Engine::Engine() {
+Engine::Engine() : shader_{} { 
   init();
 }
 
@@ -24,6 +60,18 @@ Engine::Engine() {
 void Engine::init() {
   // initialise the window
   window_.init();
+
+  shader_.emplace(vertexShaderSource, fragmentShaderSource);
+
+  // TEMP
+  vao.emplace();
+  vao->bind();
+
+  vbo.emplace(vertices, static_cast<GLsizeiptr>(sizeof(vertices)));
+  ebo.emplace(indices, static_cast<GLsizeiptr>(sizeof(indices)));
+
+  vao->linkAttribute(*vbo, 0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+  // ----
 }
 
 /*
@@ -44,7 +92,6 @@ void Engine::onUpdate() {
   // process user input
   controller_.onUpdate(window_.get());
 
-  glfwSwapBuffers(window_.get());
   glfwPollEvents();
 }
 
@@ -54,6 +101,12 @@ void Engine::onUpdate() {
  */
 void Engine::onRender() {
   setBackgroundColor(0.2f, 0.3f, 0.3f, 1.0f);
+
+  glUseProgram(shader_->sID);
+  glBindVertexArray(vao->ID);
+  glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+  glfwSwapBuffers(window_.get());
 }
 
 /*
