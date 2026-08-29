@@ -4,6 +4,7 @@
 #include <GLFW/glfw3.h>
 #include "mesh.hpp"
 #include <optional> // temp
+#include "engineglobals.hpp"
 
 // forward declerations for static functions
 static void setBackgroundColor(
@@ -57,20 +58,20 @@ Engine::Engine() {
  */
 void Engine::init() {
   // initialise the window
-  window_.init();
+  EngineGlobals::window_.init();
   testShader.emplace(vertexShaderSource, fragmentShaderSource);
   testMesh.emplace(
       vertices, sizeof(vertices), 
       indices, sizeof(indices),
       &*testShader);
-  debugGui_.init(window_.get());
+  EngineGlobals::debugGui_.init(EngineGlobals::window_.get());
 }
 
 /*
  * this holds the main render loop, all rendering logic goes here
  */
 void Engine::start() {
-  while (!glfwWindowShouldClose(window_.get())) {
+  while (!glfwWindowShouldClose(EngineGlobals::window_.get())) {
     onUpdate();
     onRender();
   }
@@ -82,7 +83,7 @@ void Engine::start() {
  */
 void Engine::onUpdate() {
   // process user input
-  controller_.onUpdate(window_.get());
+  EngineGlobals::controller_.onUpdate(EngineGlobals::window_.get());
 
   glfwPollEvents();
 }
@@ -92,15 +93,15 @@ void Engine::onUpdate() {
  * logic and handles all on-screen drawing
  */
 void Engine::onRender() {
-  debugGui_.startRenderLoop();
+  EngineGlobals::debugGui_.startRenderLoop();
 
   setBackgroundColor(0.2f, 0.3f, 0.3f, 1.0f);
 
   testMesh->onRender();
 
-  debugGui_.endRenderLoop();
+  EngineGlobals::debugGui_.endRenderLoop();
 
-  glfwSwapBuffers(window_.get());
+  glfwSwapBuffers(EngineGlobals::window_.get());
 }
 
 /*
@@ -109,7 +110,7 @@ void Engine::onRender() {
  */
 void Engine::stop() {
   glfwTerminate();
-  debugGui_.delete_();
+  EngineGlobals::debugGui_.delete_();
 }
 
 static void setBackgroundColor(

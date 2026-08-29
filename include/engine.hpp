@@ -1,28 +1,15 @@
 #pragma once
 
-#include "window.hpp"
-#include "controller.hpp"
-#include "debuggui.hpp"
-
 class Engine {
 public:
 
   Engine();
-
-  // getters / setters
-  Window& getWindow() { return window_; }
 
   // functions
   void start();
   void stop();
 
 private:
-  // holds global engine variables
-  Window window_ {};
-  Controller controller_ {};
-  DebugGui debugGui_ {};
-  // std::optional<Shader> shader_;
-
   void init();
   void onUpdate();
   void onRender();
