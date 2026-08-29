@@ -2,6 +2,7 @@
 
 #include "window.hpp"
 #include "controller.hpp"
+#include "debuggui.hpp"
 
 class Engine {
 public:
@@ -19,6 +20,7 @@ private:
   // holds global engine variables
   Window window_ {};
   Controller controller_ {};
+  DebugGui debugGui_ {};
   // std::optional<Shader> shader_;
 
   void init();

@@ -63,7 +63,7 @@ void Engine::init() {
       vertices, sizeof(vertices), 
       indices, sizeof(indices),
       &*testShader);
-  // ----
+  debugGui_.init(window_.get());
 }
 
 /*
@@ -92,9 +92,13 @@ void Engine::onUpdate() {
  * logic and handles all on-screen drawing
  */
 void Engine::onRender() {
+  debugGui_.startRenderLoop();
+
   setBackgroundColor(0.2f, 0.3f, 0.3f, 1.0f);
 
   testMesh->onRender();
+
+  debugGui_.endRenderLoop();
 
   glfwSwapBuffers(window_.get());
 }
@@ -105,6 +109,7 @@ void Engine::onRender() {
  */
 void Engine::stop() {
   glfwTerminate();
+  debugGui_.delete_();
 }
 
 static void setBackgroundColor(

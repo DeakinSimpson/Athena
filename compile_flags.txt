@@ -2,3 +2,5 @@
 -Iinclude
 -Iinclude/glad
 -Iinclude/KHR
+-Iinclude/imgui
+-Iinclude/imgui/backends
