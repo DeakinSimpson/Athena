@@ -3,11 +3,11 @@
 #include "vao.hpp"
 #include "vbo.hpp"
 #include "ebo.hpp"
-#include "shader.hpp"
 
 class Mesh {
   const float* vertices_;
   const unsigned int* indices_;
+  unsigned int texture_ {};
   
   VAO vao_;
   VBO vbo_;
@@ -16,9 +16,11 @@ class Mesh {
 public:
   Mesh(
       const float* vertices, GLsizeiptr verticesSize, 
-      const unsigned int* indices, GLsizeiptr indicesSize,
-      Shader* shaderProgram
+      const unsigned int* indices, GLsizeiptr indicesSize
+
   );
+
+  void setTexture(const char* texturePath);
 
   void onRender();
 };

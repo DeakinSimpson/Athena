@@ -2,6 +2,7 @@
 #include <glad/glad.h>
 #include <stddef.h> // used for NULL
 #include <iostream>
+#include <string>
 
 // forward declared variables
 static void compileVertexShader(const char* source, unsigned int& ID);
@@ -23,6 +24,10 @@ void Shader::init(
   compileVertexShader(vertexShaderSource, vertexShader);
   compileFragmentShader(fragmentShaderSource, fragmentShader);
   linkShaderProgram(sID, vertexShader, fragmentShader); 
+}
+
+void Shader::use() {
+  glUseProgram(sID);
 }
 
 /*
@@ -78,10 +83,10 @@ static void linkShaderProgram(
   // check for linking errors
   int success;
   char infoLog[512];
-  glGetShaderiv(shaderProgram, GL_LINK_STATUS, &success); // get the compile status
+  glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success); // get the link status
   if (!success) {
-    glGetShaderInfoLog(shaderProgram, 512, NULL, infoLog);
-    std::cerr << "Shader Failed to Compile\n" << infoLog << std::endl;
+    glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
+    std::cerr << "Shader Program Failed to Link\n" << infoLog << std::endl;
   }
 
   // cleanup vertex and fragment shader
@@ -89,8 +94,30 @@ static void linkShaderProgram(
   glDeleteShader(fragmentShaderID);
 }
 
+void Shader::setBool(const std::string &name, bool value) const
+{         
+    glUniform1i(glGetUniformLocation(sID, name.c_str()), (int)value); 
+}
+void Shader::setInt(const std::string &name, int value) const
+{ 
+    glUniform1i(glGetUniformLocation(sID, name.c_str()), value); 
+}
+void Shader::setFloat(const std::string &name, float value) const
+{ 
+    glUniform1f(glGetUniformLocation(sID, name.c_str()), value); 
+} 
+void Shader::setVec4(
+    const std::string& name, 
+    float x, 
+    float y, 
+    float z, 
+    float w) const {
+  glUniform4f(glGetUniformLocation(sID, name.c_str()), x, y, z, w);
+}
 // cleanup program shader
 void Shader::_delete() const {
   glDeleteProgram(sID);
 }
+
+
 
