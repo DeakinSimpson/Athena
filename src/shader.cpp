@@ -13,11 +13,10 @@ static void linkShaderProgram(
     const unsigned int fragmentShaderID
 ); 
 
-// compiles the shaderProgram
-Shader::Shader(
+void Shader::init(
     const char* vertexShaderSource, 
     const char* fragmentShaderSource
-) {
+    ) {
   unsigned int vertexShader;
   unsigned int fragmentShader;
 

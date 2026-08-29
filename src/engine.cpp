@@ -5,6 +5,7 @@
 #include "mesh.hpp"
 #include <optional> // temp
 #include "engineglobals.hpp"
+#include "fileReader.hpp"
 
 // forward declerations for static functions
 static void setBackgroundColor(
@@ -15,19 +16,6 @@ static void setBackgroundColor(
 );
 
 // TEMP TEST
-const char *vertexShaderSource = "#version 330 core\n"
-    "layout (location = 0) in vec3 aPos;\n"
-    "void main()\n"
-    "{\n"
-    "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-    "}\0";
-const char *fragmentShaderSource = "#version 330 core\n"
-    "out vec4 FragColor;\n"
-    "void main()\n"
-    "{\n"
-    "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-    "}\n\0";
-
 const float vertices[] = {
      0.5f,  0.5f, 0.0f,  // top right
      0.5f, -0.5f, 0.0f,  // bottom right
@@ -41,7 +29,7 @@ const unsigned int indices[] = {  // note that we start from 0!
 
 #include <optional>
 
-std::optional<Shader> testShader;
+
 std::optional<Mesh> testMesh;
 
 // ---------------------------------------------------------------------------
@@ -59,11 +47,16 @@ Engine::Engine() {
 void Engine::init() {
   // initialise the window
   EngineGlobals::window_.init();
-  testShader.emplace(vertexShaderSource, fragmentShaderSource);
+
+  // generate shader_
+  EngineGlobals::shader_.init(
+      FileReader::readFile(EngineGlobals::vertexShaderLocation).c_str(),
+      FileReader::readFile(EngineGlobals::fragmentShaderLocation).c_str());
+
   testMesh.emplace(
       vertices, sizeof(vertices), 
       indices, sizeof(indices),
-      &*testShader);
+      &EngineGlobals::shader_);
   EngineGlobals::debugGui_.init(EngineGlobals::window_.get());
 }
 
