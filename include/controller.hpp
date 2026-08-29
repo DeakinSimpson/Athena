@@ -8,11 +8,11 @@ public:
 
   Controller() = default;
 
-  void onUpdate(GLFWwindow* window);
+  void onUpdate();
 
 private:
 
-  void processInput(GLFWwindow* window);
+  void processInput();
 
 
 };

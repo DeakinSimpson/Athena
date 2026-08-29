@@ -83,7 +83,7 @@ void Engine::start() {
  */
 void Engine::onUpdate() {
   // process user input
-  EngineGlobals::controller_.onUpdate(EngineGlobals::window_.get());
+  EngineGlobals::controller_.onUpdate();
 
   glfwPollEvents();
 }
@@ -99,7 +99,7 @@ void Engine::onRender() {
 
   testMesh->onRender();
 
-  EngineGlobals::debugGui_.endRenderLoop();
+  EngineGlobals::debugGui_.endRenderLoop(EngineGlobals::window_.get());
 
   glfwSwapBuffers(EngineGlobals::window_.get());
 }

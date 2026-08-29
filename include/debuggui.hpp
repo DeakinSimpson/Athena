@@ -8,7 +8,10 @@
 #include "imgui_impl_opengl3.h"
 #pragma GCC diagnostic pop
 
+#include "GLFW/glfw3.h"
+
 class DebugGui {
+  bool isWireframeMode { false };
 public:
   DebugGui() = default;
 
@@ -32,9 +35,25 @@ public:
     
   }
 
-  void endRenderLoop() {
+  void endRenderLoop(GLFWwindow* window) {
     ImGui::Text("Hello World!");
 
+    // exit button
+    if (ImGui::Button("Exit Engine"))
+      glfwSetWindowShouldClose(window, true);
+
+    // wireframe select
+    if (ImGui::Button(isWireframeMode ? "WireFrame: ON" : "WireFrame: OFF")) {
+      if (isWireframeMode) {
+        isWireframeMode = !isWireframeMode;
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+      } else {
+        isWireframeMode = !isWireframeMode;
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+      }
+    }
+
+    // render gui
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
   }
