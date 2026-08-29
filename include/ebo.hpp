@@ -6,7 +6,7 @@ class EBO {
 public:
   unsigned int ID {};
 
-  EBO(unsigned int* indices, GLsizeiptr size);
+  EBO(const unsigned int* indices, GLsizeiptr size);
 
   void bind() const;
   void unbind() const;

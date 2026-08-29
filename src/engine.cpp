@@ -2,6 +2,8 @@
 #include "controller.hpp"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include "mesh.hpp"
+#include <optional> // temp
 
 // forward declerations for static functions
 static void setBackgroundColor(
@@ -25,32 +27,28 @@ const char *fragmentShaderSource = "#version 330 core\n"
     "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
     "}\n\0";
 
-float vertices[] = {
+const float vertices[] = {
      0.5f,  0.5f, 0.0f,  // top right
      0.5f, -0.5f, 0.0f,  // bottom right
     -0.5f, -0.5f, 0.0f,  // bottom left
     -0.5f,  0.5f, 0.0f   // top left 
 };
-unsigned int indices[] = {  // note that we start from 0!
+const unsigned int indices[] = {  // note that we start from 0!
     0, 1, 3,  // first Triangle
     1, 2, 3   // second Triangle
 };
 
 #include <optional>
-#include "vao.hpp"
-#include "vbo.hpp"
-#include "ebo.hpp"
 
-std::optional<VAO> vao;
-std::optional<VBO> vbo;
-std::optional<EBO> ebo;
+std::optional<Shader> testShader;
+std::optional<Mesh> testMesh;
 
 // ---------------------------------------------------------------------------
 
 /*
  * constructer just calls init, this is to not clutter the constructor
  */
-Engine::Engine() : shader_{} { 
+Engine::Engine() { 
   init();
 }
 
@@ -60,17 +58,11 @@ Engine::Engine() : shader_{} {
 void Engine::init() {
   // initialise the window
   window_.init();
-
-  shader_.emplace(vertexShaderSource, fragmentShaderSource);
-
-  // TEMP
-  vao.emplace();
-  vao->bind();
-
-  vbo.emplace(vertices, static_cast<GLsizeiptr>(sizeof(vertices)));
-  ebo.emplace(indices, static_cast<GLsizeiptr>(sizeof(indices)));
-
-  vao->linkAttribute(*vbo, 0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+  testShader.emplace(vertexShaderSource, fragmentShaderSource);
+  testMesh.emplace(
+      vertices, sizeof(vertices), 
+      indices, sizeof(indices),
+      &*testShader);
   // ----
 }
 
@@ -102,9 +94,7 @@ void Engine::onUpdate() {
 void Engine::onRender() {
   setBackgroundColor(0.2f, 0.3f, 0.3f, 1.0f);
 
-  glUseProgram(shader_->sID);
-  glBindVertexArray(vao->ID);
-  glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+  testMesh->onRender();
 
   glfwSwapBuffers(window_.get());
 }
@@ -128,5 +118,4 @@ static void setBackgroundColor(
 
   // this sets the color state
   glClear(GL_COLOR_BUFFER_BIT);
-
 }

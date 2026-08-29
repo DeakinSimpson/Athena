@@ -4,6 +4,7 @@
 
 VAO::VAO() {
   glGenVertexArrays(1, &ID);
+  bind();
 }
 
 void VAO::linkAttribute(

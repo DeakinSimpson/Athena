@@ -2,8 +2,6 @@
 
 #include "window.hpp"
 #include "controller.hpp"
-#include "shader.hpp"
-#include <optional> // temp
 
 class Engine {
 public:
@@ -21,7 +19,7 @@ private:
   // holds global engine variables
   Window window_ {};
   Controller controller_ {};
-  std::optional<Shader> shader_;
+  // std::optional<Shader> shader_;
 
   void init();
   void onUpdate();
