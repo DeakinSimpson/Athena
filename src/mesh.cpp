@@ -2,9 +2,9 @@
 #include "vao.hpp"
 #include "shader.hpp"
 #include <GLFW/glfw3.h>
-#include <cmath>
 #include <stb/stb_image.h>
 #include "engineglobals.hpp"
+#include "camera.hpp"
 
 /*
  * Initisialise the Mesh object, initialising the the vao vbo and ebo as well
@@ -27,9 +27,11 @@ Mesh::Mesh(
     glBindVertexArray(vao_.ID);
       }
 
-void Mesh::onRender() {
+void Mesh::onRender(Camera* camera) {
   
   EngineGlobals::shader_.use();
+
+
 
   glBindTexture(GL_TEXTURE_2D, texture_.get());
 
