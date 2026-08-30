@@ -1,14 +1,16 @@
 #pragma once
 
-// getting errors due to vendor code
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Weffc++"
+// imgui/glm are vendor code, included -isystem via the Makefile so their
+// internal warnings don't need suppressing here
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
-#pragma GCC diagnostic pop
 
 #include "GLFW/glfw3.h"
+
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 class DebugGui {
   bool isWireframeMode { false };
@@ -52,6 +54,14 @@ public:
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
       }
     }
+
+    // testing -----------------------------
+    glm::vec4 vec(1.0f, 0.0f, 0.0f, 1.0f);
+    glm::mat4 trans = glm::mat4(1.0f);
+    trans = glm::translate(trans, glm::vec3(1.0f, 1.0f, 0.0f));
+    vec = trans * vec;
+    ImGui::Text("x: %f, y: %f, z: %f", vec.x, vec.y, vec.z);
+    // -------------------------------------
 
     // render gui
     ImGui::Render();
