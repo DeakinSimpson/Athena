@@ -31,10 +31,6 @@ void Mesh::onRender() {
   
   EngineGlobals::shader_.use();
 
-  double  timeValue = glfwGetTime();
-  float greenValue = static_cast<float>(sin(timeValue) / 2.0 + 0.5);
-  EngineGlobals::shader_.setVec4("ourColor", 0.0f, greenValue, 0.0f, 0.0f);
-
   glBindTexture(GL_TEXTURE_2D, texture_.get());
 
   // TODO: update to use general inputs, not just 6

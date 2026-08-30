@@ -5,6 +5,7 @@
 #include "debuggui.hpp"
 #include "shader.hpp"
 #include <string>
+#include "renderer.hpp"
 
 namespace EngineGlobals {
   // to change to json file
@@ -16,5 +17,6 @@ namespace EngineGlobals {
   inline Controller controller_ {};
   inline Shader shader_ {}; 
   inline DebugGui debugGui_ {};
+  inline Renderer g_renderer {};
 
 }

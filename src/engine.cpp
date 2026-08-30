@@ -6,6 +6,7 @@
 #include <optional> // temp
 #include "engineglobals.hpp"
 #include "fileReader.hpp"
+#include "renderer.hpp"
 
 // forward declerations for static functions
 static void setBackgroundColor(
@@ -54,12 +55,18 @@ void Engine::init() {
   EngineGlobals::shader_.init(
       FileReader::readFile(EngineGlobals::vertexShaderLocation).c_str(),
       FileReader::readFile(EngineGlobals::fragmentShaderLocation).c_str());
+  
+  // initialize renderer
+  EngineGlobals::g_renderer.init();
 
   testMesh.emplace(
       vertices, sizeof(vertices), 
       indices, sizeof(indices));
 
   testMesh->setTexture("data/textures/container.jpg");
+
+  EngineGlobals::g_renderer.addMesh(&*testMesh);
+  
   EngineGlobals::debugGui_.init(EngineGlobals::window_.get());
 }
 
@@ -93,7 +100,7 @@ void Engine::onRender() {
 
   setBackgroundColor(0.2f, 0.3f, 0.3f, 1.0f);
 
-  testMesh->onRender();
+  EngineGlobals::g_renderer.onRender();
 
   EngineGlobals::debugGui_.endRenderLoop(EngineGlobals::window_.get());
 
