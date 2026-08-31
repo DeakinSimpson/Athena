@@ -12,6 +12,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+
+
 class DebugGui {
   bool isWireframeMode { false };
 public:
@@ -37,8 +39,10 @@ public:
     
   }
 
-  void endRenderLoop(GLFWwindow* window) {
+  void endRenderLoop(GLFWwindow* window, unsigned int fps) {
     ImGui::Text("Hello World!");
+
+    ImGui::Text("FPS: %u", fps);
 
     // exit button
     if (ImGui::Button("Exit Engine"))

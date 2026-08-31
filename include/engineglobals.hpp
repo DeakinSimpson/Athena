@@ -39,4 +39,7 @@ namespace EngineGlobals {
 
   // for debug menu
   inline bool g_isInMenu { false };
+  inline unsigned int g_fps {};
+
+  inline float g_lastFrameTime { 0.0f };
 }

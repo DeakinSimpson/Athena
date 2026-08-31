@@ -10,7 +10,7 @@ public:
   void stop();
 
 private:
-  float lastFrameTime_ { 0.0f };
+  
 
   void init();
   void onUpdate();

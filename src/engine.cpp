@@ -93,8 +93,9 @@ void Engine::start() {
 void Engine::onUpdate() {
   // get deltatime
   float currentFrame = static_cast<float>(glfwGetTime());
-  float deltaTime = currentFrame - lastFrameTime_;
-  lastFrameTime_ = currentFrame;
+  float deltaTime = currentFrame - EngineGlobals::g_lastFrameTime;
+  EngineGlobals::g_lastFrameTime = currentFrame;
+  EngineGlobals::g_fps = static_cast<unsigned int>(1.0f / deltaTime);
 
   // process user input
   EngineGlobals::controller_.onUpdate(deltaTime);
@@ -113,7 +114,7 @@ void Engine::onRender() {
 
   EngineGlobals::g_renderer.onRender();
 
-  EngineGlobals::debugGui_.endRenderLoop(EngineGlobals::window_.get());
+  EngineGlobals::debugGui_.endRenderLoop(EngineGlobals::window_.get(), EngineGlobals::g_fps);
 
   glfwSwapBuffers(EngineGlobals::window_.get());
 }
