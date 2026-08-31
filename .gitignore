@@ -70,3 +70,6 @@ Testing/
 
 # Executables
 main
+
+# imgui
+imgui.ini
