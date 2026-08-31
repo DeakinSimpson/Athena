@@ -15,18 +15,18 @@ enum Camera_Movement {
 class Camera {
 public:
   // camera Attributes
-  glm::vec3 position_;
-  glm::vec3 front_;
-  glm::vec3 up_;
-  glm::vec3 right_;
-  glm::vec3 worldUp_;
+  glm::vec3 position_ {};
+  glm::vec3 front_ {};
+  glm::vec3 up_ {};
+  glm::vec3 right_ {};
+  glm::vec3 worldUp_ {};
   // euler Angles
-  float yaw_;
-  float pitch_;
+  float yaw_ {};
+  float pitch_ {};
   // camera options
-  float movementSpeed_;
-  float mouseSensitivity_;
-  float zoom_; 
+  float movementSpeed_ {};
+  float mouseSensitivity_ {};
+  float zoom_ {};
 
   Camera() = default;
 
@@ -43,8 +43,8 @@ public:
   void handleMouseInput(float xpos, float ypos);
 
 private:
-  float lastX_;
-  float lastY_;
+  float lastX_ {};
+  float lastY_ {};
   bool firstMouse_ { true };
 
   void updateCameraVectors();
