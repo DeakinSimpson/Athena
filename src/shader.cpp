@@ -1,8 +1,11 @@
 #include "shader.hpp"
+#include <ext/matrix_float4x4.hpp>
 #include <glad/glad.h>
 #include <stddef.h> // used for NULL
 #include <iostream>
 #include <string>
+#include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 // forward declared variables
 static void compileVertexShader(const char* source, unsigned int& ID);
@@ -94,18 +97,23 @@ static void linkShaderProgram(
   glDeleteShader(fragmentShaderID);
 }
 
-void Shader::setBool(const std::string &name, bool value) const
-{         
-    glUniform1i(glGetUniformLocation(sID, name.c_str()), (int)value); 
+void Shader::setBool(const std::string &name, bool value) const {         
+  glUniform1i(glGetUniformLocation(sID, name.c_str()), (int)value); 
 }
-void Shader::setInt(const std::string &name, int value) const
-{ 
-    glUniform1i(glGetUniformLocation(sID, name.c_str()), value); 
+void Shader::setInt(const std::string &name, int value) const { 
+  glUniform1i(glGetUniformLocation(sID, name.c_str()), value); 
 }
-void Shader::setFloat(const std::string &name, float value) const
-{ 
-    glUniform1f(glGetUniformLocation(sID, name.c_str()), value); 
-} 
+void Shader::setFloat(const std::string &name, float value) const { 
+  glUniform1f(glGetUniformLocation(sID, name.c_str()), value); 
+}
+void Shader::setMat4(const std::string& name, const glm::mat4 value) const {  
+  glUniformMatrix4fv(
+      glGetUniformLocation(sID, name.c_str()), 
+      1, 
+      GL_FALSE, 
+      glm::value_ptr(value)
+  );
+}
 void Shader::setVec4(
     const std::string& name, 
     float x, 

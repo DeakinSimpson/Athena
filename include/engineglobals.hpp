@@ -7,6 +7,7 @@
 #include <string>
 #include "renderer.hpp"
 #include <glm/glm.hpp>
+#include "camera.hpp"
 
 namespace EngineGlobals {
   // to change to json file
@@ -22,6 +23,7 @@ namespace EngineGlobals {
   inline Shader shader_ {}; 
   inline DebugGui debugGui_ {};
   inline Renderer g_renderer {};
+  inline Camera camera_ {};
 
   // default camera variables
   inline const float d_yaw          { -90.0f };
@@ -31,4 +33,10 @@ namespace EngineGlobals {
   inline const float d_zoom         { 45.0f };
   inline const glm::vec3 d_up { 0.0f, 1.0f, 0.0f };
   inline const glm::vec3 d_front { 0.0f, 0.0f, -1.0f };
+  inline const float d_cameraClipNear { 0.1f };
+  inline const float d_cameraClipFar { 100.0f };
+  inline const glm::vec3 d_position { 0.0f, 0.0f, 0.0f };
+
+  // for debug menu
+  inline bool g_isInMenu { false };
 }

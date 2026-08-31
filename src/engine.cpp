@@ -59,11 +59,17 @@ void Engine::init() {
   // initialize renderer
   EngineGlobals::g_renderer.init();
 
+  EngineGlobals::camera_.init(
+      EngineGlobals::d_position, 
+      EngineGlobals::d_up, 
+      EngineGlobals::d_yaw, 
+      EngineGlobals::d_pitch);
+
   testMesh.emplace(
       vertices, sizeof(vertices), 
       indices, sizeof(indices));
 
-  testMesh->setTexture("data/textures/container.jpg");
+  testMesh->setTexture("data/textures/GigaChad.jpg");
 
   EngineGlobals::g_renderer.addMesh(&*testMesh);
   
@@ -85,8 +91,13 @@ void Engine::start() {
  * onRender() as it does not hold any of the rendering logic
  */
 void Engine::onUpdate() {
+  // get deltatime
+  float currentFrame = static_cast<float>(glfwGetTime());
+  float deltaTime = currentFrame - lastFrameTime_;
+  lastFrameTime_ = currentFrame;
+
   // process user input
-  EngineGlobals::controller_.onUpdate();
+  EngineGlobals::controller_.onUpdate(deltaTime);
 
   glfwPollEvents();
 }

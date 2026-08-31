@@ -8,11 +8,10 @@ public:
 
   Controller() = default;
 
-  void onUpdate();
+  void onUpdate(float deltaTime);
 
 private:
+  bool escWasPressed_ { false };
 
-  void processInput();
-
-
+  void processInput(float deltaTime);
 };

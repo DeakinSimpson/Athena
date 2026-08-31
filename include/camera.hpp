@@ -1,7 +1,16 @@
 #pragma once
 
+#include <glad/glad.h>
 #include <glm/glm.hpp>
-#include "engineglobals.hpp"
+
+enum Camera_Movement {
+    FORWARD,
+    BACKWARD,
+    LEFT,
+    RIGHT,
+    UP,
+    DOWN,
+};
 
 class Camera {
 public:
@@ -22,15 +31,20 @@ public:
   Camera() = default;
 
   void init(glm::vec3 position,
-      glm::vec3 up = EngineGlobals::d_up,
-      float yaw = EngineGlobals::d_yaw, 
-      float pitch = EngineGlobals::d_pitch);
+      glm::vec3 up,
+      float yaw, 
+      float pitch);
 
   glm::mat4 getViewMatrix();
 
+  void ProcessKeyboard(Camera_Movement direction, float deltaTime);
+  void ProcessMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch = true);
+  void ProcessMouseScroll(float yoffset);
+  void handleMouseInput(float xpos, float ypos);
+
 private:
   float lastX_;
-float lastY_;
+  float lastY_;
   bool firstMouse_ { true };
 
   void updateCameraVectors();

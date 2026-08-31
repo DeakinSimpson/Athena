@@ -4,7 +4,6 @@
 #include "vbo.hpp"
 #include "ebo.hpp"
 #include "texture.hpp"
-#include "camera.hpp"
 
 class Mesh {
   float* vertices_;
@@ -24,5 +23,5 @@ public:
 
   void setTexture(const char* texturePath);
 
-  void onRender(Camera* camera);
+  void onRender();
 };
