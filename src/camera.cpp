@@ -106,6 +106,7 @@ void Camera::handleMouseInput(float xpos, float ypos)
 
     lastX_ = xpos;
     lastY_ = ypos;
-
-    ProcessMouseMovement(xoffset, yoffset);
+    if (!EngineGlobals::g_isInMenu) {
+      ProcessMouseMovement(xoffset, yoffset);
+    }
 }

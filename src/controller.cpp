@@ -30,12 +30,14 @@ void Controller::processInput(float deltaTime) {
   escWasPressed_ = escPressed;
 
   // controlls movement
-  if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-    EngineGlobals::camera_.ProcessKeyboard(FORWARD, deltaTime);
-  if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-    EngineGlobals::camera_.ProcessKeyboard(BACKWARD, deltaTime);
-  if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-    EngineGlobals::camera_.ProcessKeyboard(LEFT, deltaTime);
-  if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-    EngineGlobals::camera_.ProcessKeyboard(RIGHT, deltaTime);
+  if (!EngineGlobals::g_isInMenu) {
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+      EngineGlobals::camera_.ProcessKeyboard(FORWARD, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+      EngineGlobals::camera_.ProcessKeyboard(BACKWARD, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+      EngineGlobals::camera_.ProcessKeyboard(LEFT, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+      EngineGlobals::camera_.ProcessKeyboard(RIGHT, deltaTime);
+  }
 }
