@@ -8,4 +8,7 @@ cmake --build build
 
 ## How to Run?
 ### Linux (Ubuntu)
-```./build/Athena```
+```
+./build/Athena
+
+```
